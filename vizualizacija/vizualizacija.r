@@ -22,7 +22,7 @@ zemljevid <- zemljevid %>% merge(imena)
 colnames(zemljevid)[12] <- 'drzava'
 
 zemljevid.evrope <- function(n, tabela){
-  drzAve <- tabela %>% filter(leto==2016) %>% mutate(drzava = parse_factor(drzava, levels(zemljevid$NUTS_ID)))
+  drzAve <- tabela %>% filter(leto==2016) %>% mutate(drzava = parse_factor(drzava, levels(zemljevid$drzava)))
   drzAve.norm <- drzAve %>% select(-drzava, -leto) %>% scale()
   rownames(drzAve.norm) <- drzAve$drzava
   k <- kmeans(drzAve.norm, n, nstart = 1000)  
