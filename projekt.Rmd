@@ -10,7 +10,7 @@ output:
 runtime: shiny
 ---
 
-```{r setup, echo=FALSE, results='hide', message=FALSE}
+```{r setup, echo=FALSE, results='hide', message=FALSE, warning=FALSE}
 # Če želimo nastaviti pisave v PDF-ju, odkomentiramo
 # in sledimo navodilom v programu.
 #source("fontconfig.r", encoding = "UTF-8")
@@ -27,14 +27,14 @@ V projektu bom analiziral podatke o mladih v Evropi. Naslov projekta je Aktivnos
 
 # Obdelava, uvoz in čiščenje podatkov
 
-```{r uvoz, echo=FALSE, message=FALSE}
+```{r uvoz, echo=FALSE, message=FALSE, warning=FALSE}
 source("uvoz/uvoz.r", encoding = "UTF-8")
 ```
 
 Uvozil sem podatke o mladih v obliki CSV z Eurostata ter v obliki HTML
 z Eurostata. Poglejmo si začetek razpredelnice, kjer sem za lažji pregled združil vse podatke.
 
-```{r razpredelnice}
+```{r razpredelnice, message=FALSE, warning=FALSE}
 kable(head(velika_tabela))
 ```
 
@@ -42,49 +42,49 @@ kable(head(velika_tabela))
 
 # Analiza in vizualizacija podatkov
 
-```{r vizualizacija, echo=FALSE, message=FALSE}
+```{r vizualizacija, echo=FALSE, message=FALSE, warning=FALSE}
 source("vizualizacija/vizualizacija.r", encoding = "UTF-8")
 ```
 
 Slika \ref{fig:zemljevid} prikazuje skupine držav glede na BDP per capita.
 
-```{r zemljevid, echo=FALSE, fig.align='center', fig.cap='zemljevid deleža zaposlenosti mladih'}
+```{r zemljevid, echo=FALSE, fig.align='center', fig.cap='zemljevid deleža zaposlenosti mladih', warning=FALSE, message=FALSE}
 zemljevid1
 zemljevid2
 ```
 
 ***
 Nekaj grafov o podatkih države na splošno:
-```{r grafi1, echo=FALSE, fig.align='center', fig.cap='Splošno o državi'}
-graf1
-graf2
+```{r grafi1, echo=FALSE, fig.align='center', fig.cap='Splošno o državi', warning=FALSE}
+#graf1
+#graf2
 ```
 Še nekaj grafov o podatkih o mladih v državi:
-```{r grafi2, echo=FALSE, fig.align='center', fig.cap='O mladih v državi'}
-graf3
-graf4
-graf5
-graf6
-graf7
+```{r grafi2, echo=FALSE, fig.align='center', fig.cap='O mladih v državi', warning=FALSE}
+#graf3
+#graf4
+#graf5
+#graf6
+#graf7
 ```
 
-```{r grafi3, echo=FALSE, fig.align='center', fig.cap='O mladih v državi'}
+```{r grafi3, echo=FALSE, fig.align='center', fig.cap='O mladih v državi', warning=FALSE}
 #graf8
-graf9
-graf10
+#graf9
+#graf10
 ```
 
 # Napredna analiza podatkov
 
 Kmalu ...
 
-```{r analiza, echo=FALSE, message=FALSE}
+```{r analiza, echo=FALSE, message=FALSE, warning=FALSE}
 #source("analiza/analiza.r", encoding = "UTF-8")
 ```
 
 Slika \ref{fig:graf} prikazuje povezavo med ...
 
-```{r graf, echo=FALSE, fig.align='center', fig.cap='Povezava med številom naselij in površino občine'}
+```{r graf, echo=FALSE, fig.align='center', fig.cap='Povezava med številom naselij in površino občine', warning=FALSE}
 #ggplot(inner_join(drzave, data.frame(drzava = names(skupine),
 #                                     skupina = factor(skupine)), by = "drzava")
 #, aes(x = povrsina, y = naselja, color = skupina, size = prebivalci/1000)) + geom_point() +
@@ -96,6 +96,6 @@ Slika \ref{fig:graf} prikazuje povezavo med ...
 
 ***
 
-```{r shiny, echo = FALSE}
+```{r shiny, echo = FALSE, warning=FALSE}
 shinyAppDir("shiny", options=list(width="100%", height=600))
 ```

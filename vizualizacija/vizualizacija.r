@@ -113,3 +113,12 @@ graf10 <- ggplot(merge(drzave, drzavljani) %>% filter(drzava == 'Hungary' | drza
                                         drzava == 'Austria' | drzava == 'Croatia')) +
   aes(x=BDPpc, y = drzavljani, color = drzava, size = leto) +
   geom_point() + ggtitle("BDP per capita in število državljanov")
+
+
+narisi.graf <- function(tabela1, tabela2, letnica){
+  tabela <- merge(tabela1, tabela2)
+  colnames(tabela) <- c('leto', 'drzava', 'prva', 'druga')
+  graf <- ggplot(tabela %>% filter(leto==letnica)) +
+    aes(x=prva, y=druga, color=drzava) +
+    geom_point()
+}

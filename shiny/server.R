@@ -1,24 +1,30 @@
 library(shiny)
 
 shinyServer(function(input, output) {
-  output$zaposlenost <- DT::renderDataTable({
-    dcast(zaposlenost, drzava ~ leto, value.var = "zaposlenost") %>%
+  output$tabele <- DT::renderDataTable({
+    dcast(velika_tabela[c('leto', 'drzava', input$sprem1)], drzava ~ leto, value.var = input$sprem1) %>%
       rename(`Država` = drzava)
   })
   
-  output$izobrazba <- renderUI(
-    selectInput("izobrazba", label="Izberi državo",
-                choices=c(izobrazba$drzava))
-  )
-  output$drzave <- renderPlot({
-    main <- "BDP per capita"
-    if (!is.null(input$drzava) && input$leto %in% levels(drzave$drzava)) {
-      t <- drzave %>% filter(drzava == input$drzava)
-      main <- paste(main, "v državi", input$drzava)
-    } else {
-      t <- drzave
-    }
-    ggplot(t, aes(x = leto)) + geom_histogram() +
-      ggtitle(main) + xlab("leto") + ylab("BDP")
+  output$napovedi <- renderPlot({
+    tabela <- velika_tabela[c('leto', 'drzava', input$sprem2)] %>%
+      filter(drzava == 'Hungary' | drzava == 'France' | drzava == 'Sweden' |
+                    drzava == 'United Kingdom' | drzava == 'Italy' |
+                    drzava == 'Slovenia' | drzava == 'Poland' |
+                    drzava == 'Austria' | drzava == 'Croatia')
+    colnames(tabela) <- c('leto', 'drzava', 'sprem')
+    print(ggplot(tabela) +
+            aes(x=leto, y=sprem, color=drzava) + geom_line() +
+            ggtitle(paste('Napoved za', input$sprem2, sep = ' ')) +
+            xlab('leto') + ylab(input$sprem2))
+  })
+  
+  output$primerjava <- renderPlot({
+    tabela <- velika_tabela[c('leto', 'drzava', input$spremenljivka1[1], input$spremenljivka2[1])]
+    colnames(tabela) <- c('leto', 'drzava', 'prva', 'druga')
+    print(ggplot(tabela %>% filter(leto==as.integer(input$letnica))) +
+      aes(x=prva, y=druga, color=drzava) + geom_point() +
+        ggtitle(paste('Primerjava podatkov', input$spremenljivka1, 'in', input$spremenljivka2, 'za leto', as.character(input$letnica), sep = ' ')) +
+        xlab(input$spremenljivka1) + ylab(input$spremenljivka2))
   })
 })
