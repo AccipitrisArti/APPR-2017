@@ -25,34 +25,46 @@ V projektu bom analiziral podatke o mladih v Evropi. Naslov projekta je Aktivnos
 
 ***
 
-# Obdelava, uvoz in čiščenje podatkov
+# Podatki
 
 ```{r uvoz, echo=FALSE, message=FALSE, warning=FALSE}
 source("uvoz/uvoz.r", encoding = "UTF-8")
 ```
 
 Uvozil sem podatke o mladih v obliki CSV z Eurostata ter v obliki HTML
-z Eurostata. Med mlade so šteti prebivalci stari 15 do 29 let. Poglejmo si začetek razpredelnice, kjer sem za lažji pregled združil vse podatke.
+z Eurostata. tabele sem prečistil in obdelal v 'Tidy data'.
+
+Med mlade so šteti prebivalci stari 15 do 29 let. Poglejmo si začetek razpredelnice, kjer sem za lažji pregled združil vse podatke.
 
 ```{r razpredelnice, echo=FALSE, message=FALSE, warning=FALSE}
 kable(head(velika_tabela))
 ```
 
 Pomen stolpcev:
-* BDPpc - višina BDP na osebo, drzavljani - število prebivalcev v tisoč, mladi - delež mladih, zaposlenost - delež zaposlenih mladih, izobrazba - delež mladih z vsaj nekaj izobrazbe, neformalno - delež mladih vključenih v neformalno izobraževanje, neaktivni - delež mladih, ki niso vključeni v šolski sistem in niso zaposleni.
+
+* BDPpc - višina BDP na osebo,
+* drzavljani - število prebivalcev v tisoč,
+* mladi - delež mladih,
+* zaposlenost - delež zaposlenih mladih,
+* izobrazba - delež mladih z vsaj nekaj izobrazbe,
+* neformalno - delež mladih vključenih v neformalno izobraževanje,
+* neaktivni - delež mladih, ki niso vključeni v šolski sistem in niso zaposleni.
 
 ***
 
-# Analiza in vizualizacija podatkov
+# Vizualizacija in analiza podatkov
 
 ```{r vizualizacija, echo=FALSE, message=FALSE, warning=FALSE}
 source("vizualizacija/vizualizacija.r", encoding = "UTF-8")
 ```
 
-Slika \ref{fig:zemljevid} prikazuje skupine držav glede na BDP per capita.
+Slika \ref{fig:zemljevid1} prikazuje skupine držav glede na BDP per capita.
 
-```{r zemljevid, echo=FALSE, fig.align='center', fig.cap='zemljevid deleža zaposlenosti mladih', warning=FALSE, message=FALSE}
+```{r zemljevid1, echo=FALSE, fig.align='center', fig.cap='zemljevid Evrope razdeljene glede na BDP na prebivalca', warning=FALSE, message=FALSE}
 zemljevid1
+```
+
+```{r zemljevid2, echo=FALSE, fig.align='center', fig.cap='zemljevid Evrope glede na zaposlenost mladih', warning=FALSE, message=FALSE}
 zemljevid2
 ```
 
