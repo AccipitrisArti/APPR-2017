@@ -6,11 +6,14 @@ shinyUI(fluidPage(
   
   tabsetPanel(
       tabPanel("Tabela",
-               sidebarPanel(
+               hr(),
+               sidebarLayout(
+               
+                 sidebarPanel(
                  selectInput("sprem1", label="Izberi spremenljivko",
-                             choices=colnames(velika_tabela[c(-1,-2)]), selected='drzavljani')
+                             choices=colnames(velika_tabela[c(-1,-2)]), selected='drzavljani')),
+               mainPanel(DT::dataTableOutput("tabele")))
                ),
-               mainPanel(DT::dataTableOutput("tabele"))),
       
       tabPanel("Napoved",
                sidebarPanel(
@@ -26,8 +29,21 @@ shinyUI(fluidPage(
                    selectInput("spremenljivka2", label="Izberi spremenljivko na y osi",
                                choices=colnames(velika_tabela[c(-1,-2)]), selected='mladi'),
                    sliderInput('letnica', label='Izberi leto',
-                               min=2008, max=2016, step=1, value = 2016)
+                               min=2008, max=2016, step=1, value = 2016),
+                   sliderInput('skup', label='Izberi število skupin',
+                               min=1, max=25, step=1, value = 5)
                 ),
-               mainPanel(plotOutput("primerjava")))
+               mainPanel(plotOutput("primerjava"))),
+      
+      tabPanel("Porazdelitev",
+               sidebarPanel(
+                 selectInput("porazd", label="Izberi spremenljivko",
+                             choices=colnames(velika_tabela[c(-1,-2)]), selected='BDPpc'),
+                 sliderInput('letnik', label='Izberi leto',
+                             min=2008, max=2016, step=1, value = 2016),
+                 sliderInput('koraki', label='Izberi število korakov',
+                             min=1, max=30, step=1, value = 10)
+               ),
+               mainPanel(plotOutput("porazdelitev")))
     )
 ))

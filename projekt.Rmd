@@ -32,11 +32,14 @@ source("uvoz/uvoz.r", encoding = "UTF-8")
 ```
 
 Uvozil sem podatke o mladih v obliki CSV z Eurostata ter v obliki HTML
-z Eurostata. Poglejmo si začetek razpredelnice, kjer sem za lažji pregled združil vse podatke.
+z Eurostata. Med mlade so šteti prebivalci stari 15 do 29 let. Poglejmo si začetek razpredelnice, kjer sem za lažji pregled združil vse podatke.
 
-```{r razpredelnice, message=FALSE, warning=FALSE}
+```{r razpredelnice, echo=FALSE, message=FALSE, warning=FALSE}
 kable(head(velika_tabela))
 ```
+
+Pomen stolpcev:
+* BDPpc - višina BDP na osebo, drzavljani - število prebivalcev v tisoč, mladi - delež mladih, zaposlenost - delež zaposlenih mladih, izobrazba - delež mladih z vsaj nekaj izobrazbe, neformalno - delež mladih vključenih v neformalno izobraževanje, neaktivni - delež mladih, ki niso vključeni v šolski sistem in niso zaposleni.
 
 ***
 
