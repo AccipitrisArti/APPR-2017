@@ -11,14 +11,25 @@ shinyUI(fluidPage(
                
                  sidebarPanel(
                  selectInput("sprem1", label="Izberi spremenljivko",
-                             choices=colnames(velika_tabela[c(-1,-2)]), selected='drzavljani')),
+                             choices=colnames(velika_tabela[c(-1,-2)]), selected='BDPpc')),
                mainPanel(DT::dataTableOutput("tabele")))
                ),
       
-      tabPanel("Napoved",
+      tabPanel("Graf",
                sidebarPanel(
                  selectInput("sprem2", label="Izberi spremenljivko",
-                             choices=colnames(velika_tabela[c(-1,-2)]), selected='drzavljani')
+                             choices=colnames(velika_tabela[c(-1,-2)]), selected='BDPpc')
+               ),
+               mainPanel(plotOutput("grafi"))),
+      
+      tabPanel("Napoved",
+               sidebarPanel(
+                 selectInput("sprem3", label="Izberi spremenljivko",
+                             choices=colnames(velika_tabela[c(-1,-2)]), selected='BDPpc'),
+                 selectInput("drzava", label="Izberi drzavo",
+                             choices=imena$ime, selected='Slovenia'),
+                 selectInput("priblizek1", label="Izberi metodo aproksimacije",
+                             choices=c('Izberi metodo', 'lm'), selected='Izberi metodo')
                ),
                mainPanel(plotOutput("napovedi"))),
       
@@ -30,7 +41,9 @@ shinyUI(fluidPage(
                                choices=colnames(velika_tabela[c(-1,-2)]), selected='mladi'),
                    sliderInput('letnica', label='Izberi leto',
                                min=2008, max=2016, step=1, value = 2016),
-                   sliderInput('skup', label='Izberi število skupin',
+                   selectInput("priblizek2", label="Izberi metodo aproksimacije",
+                               choices=c('Izberi metodo', 'lm'), selected='Izberi metodo'),
+                   sliderInput('skup', label='Izberi število skupin glede na BDPpc',
                                min=1, max=25, step=1, value = 5)
                 ),
                mainPanel(plotOutput("primerjava"))),
