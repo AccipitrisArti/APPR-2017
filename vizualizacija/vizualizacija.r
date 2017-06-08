@@ -29,11 +29,11 @@ zemljevid.evrope <- function(n, tabela){
   #k$tot.withinss
   skupine <- data.frame(drzava = drzAve$drzava, skupina = factor(k$cluster))
   #table(k$cluster)
-  print(ggplot() + geom_polygon(data = zemljevid %>% left_join(skupine, by = c("drzava" = "drzava")),
-                                aes(x = long, y = lat, group = group, fill = skupina)) +
-          ggtitle("BDP per capita") + xlab("long") + ylab("lat") +
-      coord_quickmap(xlim = c(-25, 40), ylim = c(32, 72)))
-  return(k$size)
+  evropa <- ggplot() + geom_polygon(data = zemljevid %>% left_join(skupine, by = c("drzava" = "drzava")),
+                                aes(x = long, y = lat, group = group, fill = skupina), show.legend=T) +
+          ggtitle(paste('Države razdeljene v',as.character(n),  'skupin glede na podatek', colnames(tabela)[3], sep=' ')) + xlab("long") + ylab("lat") +
+      coord_quickmap(xlim = c(-25, 40), ylim = c(32, 72))
+  return(evropa)
 }
 zemljevid1 <- zemljevid.evrope(5, drzave)
 
