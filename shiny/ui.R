@@ -31,7 +31,8 @@ shinyUI(fluidPage(
                  selectInput("drzava", label="Izberi drzavo",
                              choices=ime$ime, selected='Slovenia'),
                  selectInput("priblizek1", label="Izberi metodo aproksimacije",
-                             choices=c('Izberi metodo', 'lm', 'po kosih', 'loess', 'gam'), selected='Izberi metodo')
+                             choices=c('y ~ x', 'y ~ x + I(x^2)', 'y ~ x + I(x^2) + I(x^3)',
+                                       'y ~ x + I(x^2) + I(x^3) + I(x^4)'), selected='y ~ x')
                ),
                mainPanel(plotOutput("napovedi"))),
       

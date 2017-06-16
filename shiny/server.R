@@ -39,24 +39,24 @@ shinyServer(function(input, output) {
     z <- lowess(tabela$leto, tabela$sprem) # lahko bi bila to posebej metoda
     g <- ggplot(tabela) +
             aes(x=leto, y=sprem) + geom_line() +
-            geom_smooth(method = input$priblizek1, formula = y ~ x + I(x^2) + I(x^3)) +
+            geom_smooth(method = 'lm', formula = as.formula(input$priblizek1)) +
             ggtitle(paste(input$sprem3, 'skozi leta v', input$drzava, sep = ' ')) +
-            xlab('leto') + ylab(input$sprem3) +
+            xlab('leto') + ylab(input$sprem3)
     
-    if (input$priblizek1 == 'po kosih'){
-      g <- g + geom_line(data=as.data.frame(z), aes(x=x, y=y), color="green")
-    } else {g}
-    if (input$priblizek1 == 'lm'){
-      g <- g + geom_smooth(method = "lm", formula = y ~ x + I(x^2) + I(x^3))
-    } else {g}
-    if (input$priblizek1 == 'loess'){
-      #mls <- loess(data = tabela, sprem ~ leto)
-      g <- g + geom_smooth(method = "loess")
-    } else {g}
-    if (input$priblizek1 == 'gam'){
-      #mgam <- gam(data = tabela, sprem ~ s(leto))
-      g <- g + geom_smooth(method = "gam", formula = y ~ s(x))
-    } else {g}
+    #if (input$priblizek1 == 'po kosih'){
+    #  g <- g + geom_line(data=as.data.frame(z), aes(x=x, y=y), color="green")
+    #} else {g}
+    #if (input$priblizek1 == 'lm'){
+    #  g <- g + geom_smooth(method = "lm", formula = y ~ x + I(x^2) + I(x^3))
+    #} else {g}
+    #if (input$priblizek1 == 'loess'){
+    #  #mls <- loess(data = tabela, sprem ~ leto)
+    #  g <- g + geom_smooth(method = "loess")
+    #} else {g}
+    #if (input$priblizek1 == 'gam'){
+    #  #mgam <- gam(data = tabela, sprem ~ s(leto))
+    #  g <- g + geom_smooth(method = "gam", formula = y ~ s(x))
+    #} else {g}
     print(g)
     # print(sapply(list(lin, z, mls, mgam), function(x) sum(x$residuals^2)))
   })

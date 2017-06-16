@@ -56,8 +56,9 @@ povprecno <- velika_tabela %>% right_join(vsote1) %>% right_join(vsote2) %>%
                                                         neaktivni=mean(neaktivni*mladi*drzavljani/(mladina*prebivalci)))
 
 
-graf0 <- ggplot(povprecno) +
+g <- ggplot(povprecno) +
   aes(x=leto, y=zaposlenost) +
+  geom_smooth(method = 'lm', formula = y ~ x + I(x^2)) +
   geom_line() + ggtitle("Zaposlenost mladih v Evropi")
 
 
