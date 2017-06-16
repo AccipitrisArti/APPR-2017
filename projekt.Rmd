@@ -58,54 +58,48 @@ Pomen stolpcev:
 source("vizualizacija/vizualizacija.r", encoding = "UTF-8")
 ```
 
-Slika \ref{fig:zemljevid1} prikazuje skupine držav glede na BDP per capita.
+
+```{r graf_zaposlenost, echo=FALSE, fig.align='center', warning=FALSE}
+graf6
+# zaposlenost v Evropi po lm
+```
+
+```{r graf_celotno, echo=FALSE, fig.align='center', fig.cap='Splošno o državi', warning=FALSE}
+# graf za celotno evropo
+```
+
+Graf \ref{fig:zemljevid1} prikazuje skupine držav glede na BDP per capita.
 
 ```{r zemljevid1, echo=FALSE, fig.align='center', fig.cap='zemljevid Evrope razdeljene glede na BDP na prebivalca', warning=FALSE, message=FALSE}
 zemljevid1
 ```
+
+
+
+```{r graf_izobrazba_slovenia, echo=FALSE, fig.align='center', fig.cap='Splošno o državi', warning=FALSE}
+# graf izobrazbe v slo, metoda lm
+# porazdelitev izobrazbe v Evropi 2016 in 2008
+```
+
+```{r graf_mladi_in_zaposlenost, echo=FALSE, fig.align='center', fig.cap='Splošno o državi', warning=FALSE}
+# graf zaposlenosti in mladih v 3 skupinah po BDPpc za 2016
+```
+
+```{r graf_BDPpc_in_izobrazba, echo=FALSE, fig.align='center', fig.cap='Splošno o državi', warning=FALSE}
+# graf BDPpc in izobrazbe z metodo lm za 2016
+```
+
 
 ```{r zemljevid2, echo=FALSE, fig.align='center', fig.cap='zemljevid Evrope glede na zaposlenost mladih', warning=FALSE, message=FALSE}
 zemljevid2
 ```
 
 ***
-Nekaj grafov o podatkih države na splošno:
-```{r grafi1, echo=FALSE, fig.align='center', fig.cap='Splošno o državi', warning=FALSE}
-#graf1
-#graf2
-```
-Še nekaj grafov o podatkih o mladih v državi:
-```{r grafi2, echo=FALSE, fig.align='center', fig.cap='O mladih v državi', warning=FALSE}
-#graf3
-#graf4
-#graf5
-#graf6
-#graf7
-```
-
-```{r grafi3, echo=FALSE, fig.align='center', fig.cap='O mladih v državi', warning=FALSE}
-#graf8
-#graf9
-#graf10
-```
-
-# Napredna analiza podatkov
-
-Kmalu ...
-
-```{r analiza, echo=FALSE, message=FALSE, warning=FALSE}
-#source("analiza/analiza.r", encoding = "UTF-8")
-```
 
 Slika \ref{fig:graf} prikazuje povezavo med ...
 
 ```{r graf, echo=FALSE, fig.align='center', fig.cap='Povezava med številom naselij in površino občine', warning=FALSE}
-#ggplot(inner_join(drzave, data.frame(drzava = names(skupine),
-#                                     skupina = factor(skupine)), by = "drzava")
-#, aes(x = povrsina, y = naselja, color = skupina, size = prebivalci/1000)) + geom_point() +
-#  ggtitle("Število naselij glede na površino občine") +
-#  xlab(expression("Površina (km"^2 * ")")) + ylab("Št. naselij") +
-#  guides(color = guide_legend(title = "Skupina"),
+#  g + guides(color = guide_legend(title = "Skupina"),
 #         size = guide_legend(title = "Prebivalci (* 1000)"))
 ```
 

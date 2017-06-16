@@ -1,5 +1,7 @@
 library(shiny)
 
+ime <- rbind(imena, data.frame(ime='Evropa', NUTS_ID='EU'))
+
 shinyUI(fluidPage(
   
   titlePanel("Grafični prikaz"),
@@ -27,7 +29,7 @@ shinyUI(fluidPage(
                  selectInput("sprem3", label="Izberi spremenljivko",
                              choices=colnames(velika_tabela[c(-1,-2)]), selected='BDPpc'),
                  selectInput("drzava", label="Izberi drzavo",
-                             choices=imena$ime, selected='Slovenia'),
+                             choices=ime$ime, selected='Slovenia'),
                  selectInput("priblizek1", label="Izberi metodo aproksimacije",
                              choices=c('Izberi metodo', 'lm', 'po kosih', 'loess', 'gam'), selected='Izberi metodo')
                ),

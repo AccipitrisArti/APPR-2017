@@ -24,9 +24,15 @@ shinyServer(function(input, output) {
   })
   
   output$napovedi <- renderPlot({
+    if (input$drzava == 'Evropa'){
+    tabela <- povprecno[c('leto', input$sprem3)]
+    tabela$drzava <- 'Evropa'
+    colnames(tabela) <- c('leto', 'sprem', 'drzava')
+    } else {
     tabela <- velika_tabela[c('leto', 'drzava', input$sprem3)] %>%
       filter(drzava == input$drzava)
     colnames(tabela) <- c('leto', 'drzava', 'sprem')
+    }
     lin <- lm(data = tabela, sprem ~ leto + I(leto^2) + I(leto^3))
     napovej <- data.frame(leto = c(2017, 2018, 2019), drzava = input$drzava,
                                          sprem = predict(lin, data.frame(leto=c(2017, 2018, 2019))))
@@ -35,7 +41,8 @@ shinyServer(function(input, output) {
             aes(x=leto, y=sprem) + geom_line() +
             geom_smooth(method = input$priblizek1, formula = y ~ x + I(x^2) + I(x^3)) +
             ggtitle(paste(input$sprem3, 'skozi leta v', input$drzava, sep = ' ')) +
-            xlab('leto') + ylab(input$sprem3)
+            xlab('leto') + ylab(input$sprem3) +
+    
     if (input$priblizek1 == 'po kosih'){
       g <- g + geom_line(data=as.data.frame(z), aes(x=x, y=y), color="green")
     } else {g}

@@ -44,6 +44,24 @@ zemljevid2 <- ggplot() + geom_polygon(data = zemljevid %>% left_join(velika_tabe
 #povprecja <- drzave %>% group_by(obcina) %>%
 #  summarise(povprecje = sum(velikost.druzine * stevilo.druzin) / sum(stevilo.druzin))
 
+vsote1 <- velika_tabela %>% group_by(leto) %>% summarise(prebivalci=sum(drzavljani))
+vsote2 <- velika_tabela %>% right_join(vsote1) %>% group_by(leto) %>% summarise(mladina=sum(mladi*drzavljani/prebivalci))
+povprecno <- velika_tabela %>% right_join(vsote1) %>% right_join(vsote2) %>%
+  group_by(leto) %>% summarise(BDPpc=sum(BDPpc*drzavljani/prebivalci),
+                                                        drzavljani=mean(prebivalci),
+                                                        mladi=mean(mladina),
+                                                        zaposlenost=mean(zaposlenost*mladi*drzavljani/(mladina*prebivalci)),
+                                                        izobrazba=mean(izobrazba*mladi*drzavljani/(mladina*prebivalci)),
+                                                        neformalno=mean(neformalno*mladi*drzavljani/(mladina*prebivalci)),
+                                                        neaktivni=mean(neaktivni*mladi*drzavljani/(mladina*prebivalci)))
+
+
+graf0 <- ggplot(povprecno) +
+  aes(x=leto, y=zaposlenost) +
+  geom_line() + ggtitle("Zaposlenost mladih v Evropi")
+
+
+
 graf1 <- ggplot(drzave %>% filter(drzava == 'Hungary' | drzava == 'France' | drzava == 'Sweden' |
                                 drzava == 'United Kingdom' | drzava == 'Italy' |
                                 drzava == 'Slovenia' | drzava == 'Poland' |
