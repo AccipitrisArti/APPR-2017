@@ -61,7 +61,7 @@ source("vizualizacija/vizualizacija.r", encoding = "UTF-8")
 
 ```{r graf_zaposlenost, echo=FALSE, fig.align='center', warning=FALSE}
 graf6
-# zaposlenost v Evropi po lm
+g
 ```
 
 ```{r graf_celotno, echo=FALSE, fig.align='center', fig.cap='Splošno o državi', warning=FALSE}

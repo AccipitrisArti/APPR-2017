@@ -37,7 +37,7 @@ shinyServer(function(input, output) {
     napovej <- data.frame(leto = c(2017, 2018, 2019), drzava = input$drzava,
                                          sprem = predict(lin, data.frame(leto=c(2017, 2018, 2019))))
     z <- lowess(tabela$leto, tabela$sprem) # lahko bi bila to posebej metoda
-    g <- ggplot(tabela) +
+    g <- ggplot(tabela %>% rbind(napovej)) +
             aes(x=leto, y=sprem) + geom_line() +
             geom_smooth(method = 'lm', formula = as.formula(input$priblizek1)) +
             ggtitle(paste(input$sprem3, 'skozi leta v', input$drzava, sep = ' ')) +

@@ -30,7 +30,7 @@ shinyUI(fluidPage(
                              choices=colnames(velika_tabela[c(-1,-2)]), selected='BDPpc'),
                  selectInput("drzava", label="Izberi drzavo",
                              choices=ime$ime, selected='Slovenia'),
-                 selectInput("priblizek1", label="Izberi metodo aproksimacije",
+                 selectInput("priblizek1", label="Izberi stopnjo linearne regresije",
                              choices=c('y ~ x', 'y ~ x + I(x^2)', 'y ~ x + I(x^2) + I(x^3)',
                                        'y ~ x + I(x^2) + I(x^3) + I(x^4)'), selected='y ~ x')
                ),

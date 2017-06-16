@@ -56,10 +56,12 @@ povprecno <- velika_tabela %>% right_join(vsote1) %>% right_join(vsote2) %>%
                                                         neaktivni=mean(neaktivni*mladi*drzavljani/(mladina*prebivalci)))
 
 
-g <- ggplot(povprecno) +
-  aes(x=leto, y=zaposlenost) +
-  geom_smooth(method = 'lm', formula = y ~ x + I(x^2)) +
-  geom_line() + ggtitle("Zaposlenost mladih v Evropi")
+napovej <- data.frame(leto = c(2017, 2018),
+                      napoved = predict(lin, data.frame(leto=c(2017, 2018))))
+g <- ggplot(povprecno[c(1,5)] %>% left_join(napovej) %>% rbind(povprecno[c(1,5)] %>% right_join(napovej)), aes(leto)) +
+  geom_line(aes(y=zaposlenost)) +
+  #geom_smooth(method = 'lm', formula = y ~ x + I(x^2)) +
+  geom_point(aes(y=napoved)) + ggtitle("Zaposlenost mladih v Evropi")
 
 
 
