@@ -67,25 +67,31 @@ zaposlenost_drzave
 zaposlenost_evropa
 ```
 
+
+
+
+
+```{r graf_izobrazba_slovenia, echo=FALSE, fig.align='center', fig.cap='Splošno o državi', warning=FALSE}
+sliz
+# porazdelitev izobrazbe v Evropi 2016 in 2008
+eizb1
+eizb2
+```
+
+```{r graf_mladi_in_zaposlenost, echo=FALSE, fig.align='center', fig.cap='Splošno o državi', warning=FALSE}
+# graf zaposlenosti in mladih v 3 skupinah po BDPpc za 2016
+zim.graf
+```
+
 Graf \ref{fig:zemljevid1} prikazuje skupine držav glede na BDP per capita.
 
 ```{r zemljevid1, echo=FALSE, fig.align='center', fig.cap='zemljevid Evrope razdeljene glede na BDP na prebivalca', warning=FALSE, message=FALSE}
 zemljevid1
 ```
 
-
-
-```{r graf_izobrazba_slovenia, echo=FALSE, fig.align='center', fig.cap='Splošno o državi', warning=FALSE}
-# graf izobrazbe v slo, metoda lm
-# porazdelitev izobrazbe v Evropi 2016 in 2008
-```
-
-```{r graf_mladi_in_zaposlenost, echo=FALSE, fig.align='center', fig.cap='Splošno o državi', warning=FALSE}
-# graf zaposlenosti in mladih v 3 skupinah po BDPpc za 2016
-```
-
 ```{r graf_BDPpc_in_izobrazba, echo=FALSE, fig.align='center', fig.cap='Splošno o državi', warning=FALSE}
 # graf BDPpc in izobrazbe z metodo lm za 2016
+bii.graf
 ```
 
 
@@ -96,11 +102,6 @@ zemljevid2
 ***
 
 Slika \ref{fig:graf} prikazuje povezavo med ...
-
-```{r graf, echo=FALSE, fig.align='center', fig.cap='Povezava med številom naselij in površino občine', warning=FALSE}
-#  g + guides(color = guide_legend(title = "Skupina"),
-#         size = guide_legend(title = "Prebivalci (* 1000)"))
-```
 
 ***
 

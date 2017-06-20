@@ -144,3 +144,40 @@ narisi.graf <- function(tabela1, tabela2, letnica, razdeli=25){
     aes(x=prva, y=druga, color=skupine) +
     geom_point()
 }
+
+sloizb <- izobrazba %>%
+  filter(drzava == 'Slovenia')
+lin <- lm(data = sloizb, izobrazba ~ leto + I(leto^2) + I(leto^3))
+napovej <- data.frame(leto = c(2017, 2018, 2019), drzava = 'Slovenia',
+                        sprem = predict(lin, data.frame(leto=c(2017, 2018, 2019))), napoved=FALSE)
+sloizb$napoved <- TRUE
+sloizb <- sloizb %>% left_join(napovej) %>% rbind(sloizb %>% right_join(napovej))
+sliz <- ggplot(sloizb) + aes(x=leto, y=izobrazba, color=napoved) +
+    geom_line() +
+    geom_smooth(method = 'lm', formula = y ~ x + I(x^2) + I(x^3)) +
+    geom_point() +
+    ggtitle('Izobrazba v Sloveniji skozi leta v in napoved za naslednja 3 leta') +
+    xlab('leto') + ylab(izobrazba)
+
+eizb <- izobrazba %>% filter(leto==2008)
+eizb1 <- hist(eizb$izobrazba, breaks = 20, col = "gray",
+     main = 'Porazdelitev deleža izobrazbe v Evropi za 2008',
+     xlab = 'Število', ylab = 'Pogostost'
+)
+eizb <- izobrazba %>% filter(leto==2016)
+eizb2 <- hist(eizb$izobrazba, breaks = 20, col = "gray",
+              main = 'Porazdelitev deleža izobrazbe v Evropi za 2016',
+              xlab = 'Število', ylab = 'Pogostost'
+)
+
+zim <- velika_tabela[c('leto', 'drzava', 'zaposlenost', 'mladi')]
+zim$skupine <- hclust(dist(scale(drzave$BDPpc))) %>% cutree(3)
+zim.graf <- ggplot(tabela %>% filter(leto==2016)) +
+            aes(x=zaposlenost, y=mladi, color=as.character(skupine)) + geom_point(show.legend=F) +
+            ggtitle('Primerjava zaposlenosti mladih v primerjavi zdeležem mladih v državi za leto 2016')
+
+bii <- velika_tabela[c('leto', 'drzava', 'BDPpc', 'izobrazba')]
+bii.graf <- ggplot(bii %>% filter(leto==2016)) +
+          aes(x=BDPpc, y=izobrazba) + geom_point() +
+          geom_smooth(method = 'lm', formula = y ~ x + I(x^2) + I(x^3)) +
+          ggtitle('Primerjava podatkov BDP per capita in izobrazbe za leto 2016')
