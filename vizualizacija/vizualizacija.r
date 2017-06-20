@@ -2,6 +2,8 @@
 library(ggplot2)
 library(dplyr)
 source("lib/uvozi.zemljevid.r", encoding = "UTF-8")
+library(gridExtra)
+
 
 imena <- data.frame(c('TR','AT','BE','BG','HR','CY','CZ','DK','EE','FI','MK','FR','DE','EL','HU','IS','IE',
                       'IT','LT','LI','LV','LU','MT','NL','NO','PL','PT','RO','ME','SK','SI','ES','SE','CH','UK'),
@@ -164,12 +166,12 @@ sliz <- ggplot(sloizb) + aes(x=leto, y=izobrazba, color=napoved) +
 
 eizb <- izobrazba %>% filter(leto==2008)
 eizb1 <- ggplot(eizb) + geom_histogram(binwidth = 4, color='grey', fill='olivedrab3') + aes(x=izobrazba) +
-              ggtitle('Porazdelitev deleža izobrazbe v Evropi za 2008') +
+              ggtitle('Delež izobrazbe v 2008') +
               xlab('Delež') + ylab('Ferkvenca')
 
 eizb <- izobrazba %>% filter(leto==2016)
 eizb2 <- ggplot(eizb) + geom_histogram(binwidth = 4, color='grey', fill='orchid2') + aes(x=izobrazba) +
-  ggtitle('Porazdelitev deleža izobrazbe v Evropi za 2016') +
+  ggtitle('Delež izobrazbe v 2016') +
   xlab('Delež') + ylab('Ferkvenca')
 
 
@@ -184,3 +186,12 @@ bii.graf <- ggplot(bii %>% filter(leto==2016)) +
           aes(x=BDPpc, y=izobrazba) + geom_point(size=2) +
           geom_smooth(method = 'lm', formula = y ~ x + I(x^2) + I(x^3)) +
           ggtitle('Primerjava podatkov BDP per capita in izobrazbe za leto 2016')
+
+
+
+pro <- ggplot(prostovoljstvo) + geom_col() + aes(x=drzava, y=prostovoljstvo)
+reg <- ggplot(religija) + geom_col() + aes(x=drzava, y=religija)
+pir <- ggplot(prostovoljstvo %>% inner_join(religija)) + geom_point() + aes(x=prostovoljstvo, y=religija)
+
+library(gridExtra)
+# grid.arrange(pro, reg, pir, ncol=2)

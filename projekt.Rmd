@@ -19,9 +19,9 @@ runtime: shiny
 source("lib/libraries.r", encoding = "UTF-8")
 ```
 
-# Izbira teme
+# Aktivnost mladih v Evropi
 
-V projektu bom analiziral podatke o mladih v Evropi. Naslov projekta je Aktivnost mladih v Evropi.
+Sem Anže Marinko, študent 2. letnika finančne matematike na Fakulteti za matematiko in fiziko na Univerzi v Ljubljani. Pri tem projektu bom analiziral podatke o mladih v Evropi. Naslov projekta je Aktivnost mladih v Evropi. Sam se precej ukvarjam z mladimi, saj sem skavtski voditelj in oratorijski animator, pa tudi sicer se štejem za mladega, zato me ta tema še posebej zanima. Analiziral bom rrazlične statistične podatke o mladih, ki so dostopni na internetu.
 
 ***
 
@@ -31,22 +31,23 @@ V projektu bom analiziral podatke o mladih v Evropi. Naslov projekta je Aktivnos
 source("uvoz/uvoz.r", encoding = "UTF-8")
 ```
 
-Uvozil sem podatke o mladih v obliki CSV z Eurostata ter v obliki HTML
-z Eurostata. tabele sem prečistil in obdelal v 'Tidy data'.
+Podatke o mladih sem uvozil v obliki CSV in HTML z Eurostata. Med mlade so šteti prebivalci stari 15 do 29 let. Po uvozu sem iz tabel odstranil nepotrebne stolpce in jih obdelal v t.i. Tidy data.
 
-Med mlade so šteti prebivalci stari 15 do 29 let. Poglejmo si začetek razpredelnice, kjer sem za lažji pregled združil vse podatke.
+Poglejmo si začetek razpredelnice, kjer sem za lažji pregled združil vse podatke.
 
 ```{r razpredelnice, echo=FALSE, message=FALSE, warning=FALSE}
 kable(head(velika_tabela))
 ```
 
-Pomen stolpcev:
+Ta tabela je namenjena predvsem prikazu. Tabele, ki sem jih sicer uporabljal pa imajo stolpce: leto, država in enega izmed vseh ostalih stolpcev v združeni tabeli.
 
-* BDPpc - višina BDP na osebo,
-* drzavljani - število prebivalcev v tisoč,
+Razlaga pomena stolpcev:
+
+* BDPpc - višina bruto domačega proizvoda (BDP) na prebivalca,
+* drzavljani - število prebivalcev (v tisoč),
 * mladi - delež mladih,
 * zaposlenost - delež zaposlenih mladih,
-* izobrazba - delež mladih z vsaj nekaj izobrazbe,
+* izobrazba - delež mladih z zaključeno vsaj osnovno šolo,
 * neformalno - delež mladih vključenih v neformalno izobraževanje,
 * neaktivni - delež mladih, ki niso vključeni v šolski sistem in niso zaposleni.
 
@@ -60,50 +61,57 @@ source("vizualizacija/vizualizacija.r", encoding = "UTF-8")
 
 
 ```{r graf_zaposlenost, echo=FALSE, fig.align='center', warning=FALSE, message=FALSE}
-zaposlenost_drzave
+grid.arrange(zaposlenost_drzave, zaposlenost_evropa,  ncol=1)
 ```
 
-```{r graf_celotno, echo=FALSE, fig.align='center', warning=FALSE}
-zaposlenost_evropa
-```
+Iz grafa vidimo, da je v večini izbranih držav mogoče opaziti podobnost nihanja deleža zaposlenosti mladih in nihanja v celotni Evropi (To sem dobil z uteženim povprečjem glede na število prebivalcev). Sicer je iz tega grafa težko predvidevati razlog za padanje do leta 2013, saj imamo podatke le za zadnjih 9 let, a te spremembe bi si lahko razlagal tudi tako, da je razlog za padanje ekonomska kriza, ko so podjetja več odpuščala in nekatera celo propadla, potem pa so se mladi počasi vrnili na trg dela in sčasoma spet dobili službe, kar bi lahko pomenilo to zvečanje deleža zaposlenosti mladih po letu 2013.
 
+Modri del spodnjega grafa nam prikazuje napoved za leti 2017 in 2018 po linearni regresiji s kvadratno funkcijo. A ta napoved je slaba že zaradi neoptimalne izbire modela in majhne količine podatkov.
 
-
-
-
-```{r graf_izobrazba_slovenia, echo=FALSE, fig.align='center', fig.cap='Splošno o državi', warning=FALSE, message=FALSE}
+```{r graf_izobrazba_slovenia, echo=FALSE, fig.align='center', fig.cap='Izobrazba v Sloveniji', warning=FALSE, message=FALSE}
 sliz
-# porazdelitev izobrazbe v Evropi 2016 in 2008
-eizb1
-eizb2
 ```
 
-```{r graf_mladi_in_zaposlenost, echo=FALSE, fig.align='center', fig.cap='Splošno o državi', echo=FALSE, message=FALSE, warning=FALSE, warning=FALSE}
+Slovenija
+
+```{r izobrazba_v_evropi, echo=FALSE, fig.align='center', fig.cap='Porazdelitev deleža izobrazbe v Evropi', echo=FALSE, message=FALSE, warning=FALSE, warning=FALSE}
+# porazdelitev izobrazbe v Evropi 2016 in 2008
+grid.arrange(eizb1, eizb2, ncol=2)
+```
+
+Evropa
+
+```{r graf_mladi_in_zaposlenost, echo=FALSE, fig.align='center', fig.cap='Primerjava števila mladih in njihove zaposlenosti', echo=FALSE, message=FALSE, warning=FALSE, warning=FALSE}
 # graf zaposlenosti in mladih v 3 skupinah po BDPpc za 2016
 zim.graf
 ```
 
-Graf \ref{fig:zemljevid1} prikazuje skupine držav glede na BDP per capita.
+Primerjava
+
 
 ```{r zemljevid1, echo=FALSE, fig.align='center', fig.cap='zemljevid Evrope razdeljene glede na BDP na prebivalca', warning=FALSE, message=FALSE}
 zemljevid1
 ```
 
-```{r graf_BDPpc_in_izobrazba, echo=FALSE, fig.align='center', fig.cap='Splošno o državi', warning=FALSE}
+Graf \ref{fig:zemljevid1} prikazuje skupine držav glede na BDP per capita.
+
+```{r graf_BDPpc_in_izobrazba, echo=FALSE, fig.align='center', fig.cap='Povezava med izobrazbo in BDP per capita', warning=FALSE}
 # graf BDPpc in izobrazbe z metodo lm za 2016
 bii.graf
 ```
 
+Povezava
 
 ```{r zemljevid2, echo=FALSE, fig.align='center', fig.cap='zemljevid Evrope glede na zaposlenost mladih', warning=FALSE, message=FALSE}
 zemljevid2
 ```
 
-***
-
-Slika \ref{fig:graf} prikazuje povezavo med ...
+Zaposlenost
 
 ***
+# Različni prikazi podatkov
+
+Predstavitev shinya
 
 ```{r shiny, echo = FALSE, warning=FALSE}
 shinyAppDir("shiny", options=list(width="100%", height=600))
@@ -112,3 +120,5 @@ shinyAppDir("shiny", options=list(width="100%", height=600))
 # Zaključek
 
 zzzzzzzzzzzzz
+
+
