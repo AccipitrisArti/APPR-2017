@@ -60,12 +60,11 @@ source("vizualizacija/vizualizacija.r", encoding = "UTF-8")
 
 
 ```{r graf_zaposlenost, echo=FALSE, fig.align='center', warning=FALSE}
-graf6
-g
+zaposlenost_drzave
 ```
 
-```{r graf_celotno, echo=FALSE, fig.align='center', fig.cap='Splošno o državi', warning=FALSE}
-# graf za celotno evropo
+```{r graf_celotno, echo=FALSE, fig.align='center', warning=FALSE}
+zaposlenost_evropa
 ```
 
 Graf \ref{fig:zemljevid1} prikazuje skupine držav glede na BDP per capita.

@@ -9,14 +9,14 @@ shinyServer(function(input, output) {
   })
   
   output$grafi <- renderPlot({
-    tabela <- velika_tabela[c('leto', 'drzava', input$sprem2)] %>%
-      filter(drzava == 'Hungary' | drzava == 'Spain' | drzava == 'Sweden' |
-                    drzava == 'United Kingdom' | drzava == 'Italy' |
-                    drzava == 'Slovenia' | drzava == 'Poland' |
-                    drzava == 'Austria' | drzava == 'Croatia')
+    tabela <- velika_tabela[c('leto', 'drzava', input$sprem2)]
     colnames(tabela) <- c('leto', 'drzava', 'sprem')
+    tabela1 <- tabela %>% filter(drzava == input$drzav[1])
+    for (i in input$drzav[-1]){
+      tabela1 <- tabela1 %>% rbind(tabela %>% filter(drzava == i))}
+    tabela <- tabela1
+    print(tabela)
     lin <- lm(data = tabela, sprem ~ leto)
-    print(predict(lin, data.frame(leto=c(2017, 2018, 2019))))
     print(ggplot(tabela) +
             aes(x=leto, y=sprem, color=drzava) + geom_line() +
             ggtitle(paste(input$sprem2, 'skozi leta', sep = ' ')) +
@@ -33,32 +33,29 @@ shinyServer(function(input, output) {
       filter(drzava == input$drzava)
     colnames(tabela) <- c('leto', 'drzava', 'sprem')
     }
-    lin <- lm(data = tabela, sprem ~ leto + I(leto^2) + I(leto^3))
-    napovej <- data.frame(leto = c(2017, 2018, 2019), drzava = input$drzava,
-                                         sprem = predict(lin, data.frame(leto=c(2017, 2018, 2019))))
-    z <- lowess(tabela$leto, tabela$sprem) # lahko bi bila to posebej metoda
-    g <- ggplot(tabela %>% rbind(napovej)) +
-            aes(x=leto, y=sprem) + geom_line() +
+    apr <- input$priblizek1 %>% gsub('y','sprem', ., ignore.case=TRUE) %>% gsub('x','leto', ., ignore.case=TRUE)
+    lin <- lm(data = tabela, as.formula(apr))
+    print(input$napoved1)
+    if (input$napoved1){
+      napovej <- data.frame(leto = c(2017, 2018, 2019), drzava = input$drzava,
+                            sprem = predict(lin, data.frame(leto=c(2017, 2018, 2019))), napoved=FALSE)
+      tabela$napoved <- TRUE
+      tabela <- tabela %>% left_join(napovej) %>% rbind(tabela %>% right_join(napovej))
+      g <- ggplot(tabela) + aes(x=leto, y=sprem, color=napoved) +
+            geom_line() +
             geom_smooth(method = 'lm', formula = as.formula(input$priblizek1)) +
-            ggtitle(paste(input$sprem3, 'skozi leta v', input$drzava, sep = ' ')) +
+            geom_point() +
+            ggtitle(paste(input$sprem3, 'skozi leta v', input$drzava, 'in napoved za naslednja 3 leta', sep = ' ')) +
             xlab('leto') + ylab(input$sprem3)
-    
-    #if (input$priblizek1 == 'po kosih'){
-    #  g <- g + geom_line(data=as.data.frame(z), aes(x=x, y=y), color="green")
-    #} else {g}
-    #if (input$priblizek1 == 'lm'){
-    #  g <- g + geom_smooth(method = "lm", formula = y ~ x + I(x^2) + I(x^3))
-    #} else {g}
-    #if (input$priblizek1 == 'loess'){
-    #  #mls <- loess(data = tabela, sprem ~ leto)
-    #  g <- g + geom_smooth(method = "loess")
-    #} else {g}
-    #if (input$priblizek1 == 'gam'){
-    #  #mgam <- gam(data = tabela, sprem ~ s(leto))
-    #  g <- g + geom_smooth(method = "gam", formula = y ~ s(x))
-    #} else {g}
+      } else {
+        g <- ggplot(tabela) + aes(x=leto, y=sprem) +
+          geom_line() +
+          geom_smooth(method = 'lm', formula = as.formula(input$priblizek1)) +
+          geom_point() +
+          ggtitle(paste(input$sprem3, 'skozi leta v', input$drzava, sep = ' ')) +
+          xlab('leto') + ylab(input$sprem3)        
+      }
     print(g)
-    # print(sapply(list(lin, z, mls, mgam), function(x) sum(x$residuals^2)))
   })
   
   output$primerjava <- renderPlot({

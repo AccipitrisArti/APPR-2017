@@ -1,6 +1,6 @@
 library(shiny)
 
-ime <- rbind(imena, data.frame(ime='Evropa', NUTS_ID='EU'))
+ime <- rbind(data.frame(ime='Evropa', NUTS_ID='EU'), imena)
 
 shinyUI(fluidPage(
   
@@ -20,7 +20,11 @@ shinyUI(fluidPage(
       tabPanel("Graf",
                sidebarPanel(
                  selectInput("sprem2", label="Izberi spremenljivko",
-                             choices=colnames(velika_tabela[c(-1,-2)]), selected='BDPpc')
+                             choices=colnames(velika_tabela[c(-1,-2)]), selected='BDPpc'),
+                 checkboxGroupInput('drzav', label="Izberi države",
+                                    choices=ime$ime, selected=c('Hungary', 'Spain', 'Sweden', 'United Kingdom',
+                                                                'Italy', 'Slovenia', 'Poland', 'Austria', 'Croatia'
+                                                                ))
                ),
                mainPanel(plotOutput("grafi"))),
       
@@ -30,10 +34,9 @@ shinyUI(fluidPage(
                              choices=colnames(velika_tabela[c(-1,-2)]), selected='BDPpc'),
                  selectInput("drzava", label="Izberi drzavo",
                              choices=ime$ime, selected='Slovenia'),
-                 selectInput("priblizek1", label="Izberi stopnjo linearne regresije",
-                             choices=c('y ~ x', 'y ~ x + I(x^2)', 'y ~ x + I(x^2) + I(x^3)',
-                                       'y ~ x + I(x^2) + I(x^3) + I(x^4)'), selected='y ~ x')
-               ),
+                 checkboxInput('napoved1', label='Napoved'),
+                 selectInput("priblizek1", label="Izberi funkcijo linearne regresije",
+                             choices=c('y ~ x', 'y ~ x + I(x^2)', 'y ~ x + I(x^2) + I(x^3)'), selected='y ~ x')               ),
                mainPanel(plotOutput("napovedi"))),
       
       tabPanel("Primerjave spremenljivk",

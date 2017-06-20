@@ -58,9 +58,8 @@ povprecno <- velika_tabela %>% right_join(vsote1) %>% right_join(vsote2) %>%
 
 napovej <- data.frame(leto = c(2017, 2018),
                       napoved = predict(lin, data.frame(leto=c(2017, 2018))))
-g <- ggplot(povprecno[c(1,5)] %>% left_join(napovej) %>% rbind(povprecno[c(1,5)] %>% right_join(napovej)), aes(leto)) +
+zaposlenost_evropa <- ggplot(povprecno[c(1,5)] %>% left_join(napovej) %>% rbind(povprecno[c(1,5)] %>% right_join(napovej)), aes(leto)) +
   geom_line(aes(y=zaposlenost)) +
-  #geom_smooth(method = 'lm', formula = y ~ x + I(x^2)) +
   geom_point(aes(y=napoved)) + ggtitle("Zaposlenost mladih v Evropi")
 
 
@@ -100,7 +99,7 @@ graf5 <- ggplot(neformalno %>% filter(drzava == 'Hungary' | drzava == 'France' |
   aes(x=leto, y=neformalno, color = drzava) +
   geom_line() + ggtitle("Neformalno izobraževanje")
 
-graf6 <- ggplot(zaposlenost %>% filter(drzava == 'Hungary' | drzava == 'France' | drzava == 'Sweden' |
+zaposlenost_drzave <- ggplot(zaposlenost %>% filter(drzava == 'Hungary' | drzava == 'France' | drzava == 'Sweden' |
                                drzava == 'United Kingdom' | drzava == 'Italy' |
                                drzava == 'Slovenia' | drzava == 'Poland' |
                                drzava == 'Austria' | drzava == 'Croatia')) +

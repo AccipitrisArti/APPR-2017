@@ -220,6 +220,7 @@ drzavljani <- read_csv("podatki/urejeni_podatki/Drzavljani.csv",
                        locale = locale(encoding = "Windows-1250"), na=':')
 mladi <- read_csv("podatki/urejeni_podatki/Mladi.csv",
                   locale = locale(encoding = "Windows-1250"), na=':')
+mladi$mladi <- round(mladi$mladi, 1)
 izobrazba <- read_csv("podatki/urejeni_podatki/Izobrazba.csv",
                       locale = locale(encoding = "Windows-1250"), na=':')
 neformalno <- read_csv("podatki/urejeni_podatki/Neformalno.csv",
