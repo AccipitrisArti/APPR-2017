@@ -59,7 +59,7 @@ source("vizualizacija/vizualizacija.r", encoding = "UTF-8")
 ```
 
 
-```{r graf_zaposlenost, echo=FALSE, fig.align='center', warning=FALSE}
+```{r graf_zaposlenost, echo=FALSE, fig.align='center', warning=FALSE, message=FALSE}
 zaposlenost_drzave
 ```
 
@@ -71,14 +71,14 @@ zaposlenost_evropa
 
 
 
-```{r graf_izobrazba_slovenia, echo=FALSE, fig.align='center', fig.cap='Splošno o državi', warning=FALSE}
+```{r graf_izobrazba_slovenia, echo=FALSE, fig.align='center', fig.cap='Splošno o državi', warning=FALSE, message=FALSE}
 sliz
 # porazdelitev izobrazbe v Evropi 2016 in 2008
 eizb1
 eizb2
 ```
 
-```{r graf_mladi_in_zaposlenost, echo=FALSE, fig.align='center', fig.cap='Splošno o državi', warning=FALSE}
+```{r graf_mladi_in_zaposlenost, echo=FALSE, fig.align='center', fig.cap='Splošno o državi', echo=FALSE, message=FALSE, warning=FALSE, warning=FALSE}
 # graf zaposlenosti in mladih v 3 skupinah po BDPpc za 2016
 zim.graf
 ```

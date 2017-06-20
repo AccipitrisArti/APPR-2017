@@ -38,7 +38,7 @@ zemljevid.evrope <- function(n, tabela){
 zemljevid1 <- zemljevid.evrope(5, drzave)
 
 zemljevid2 <- ggplot() + geom_polygon(data = zemljevid %>% left_join(velika_tabela %>% filter(leto==2015)),
-                             aes(x = long, y = lat, group = group, fill=zaposlenost), color='black') +
+                             aes(x = long, y = lat, group = group, fill=zaposlenost)) +
   coord_quickmap(xlim = c(-25, 40), ylim = c(32, 72))
 
 #povprecja <- drzave %>% group_by(obcina) %>%
@@ -56,11 +56,14 @@ povprecno <- velika_tabela %>% right_join(vsote1) %>% right_join(vsote2) %>%
                                                         neaktivni=mean(neaktivni*mladi*drzavljani/(mladina*prebivalci)))
 
 
+lin <- lm(data = povprecno, zaposlenost ~ leto + I(leto^2))
 napovej <- data.frame(leto = c(2017, 2018),
-                      napoved = predict(lin, data.frame(leto=c(2017, 2018))))
-zaposlenost_evropa <- ggplot(povprecno[c(1,5)] %>% left_join(napovej) %>% rbind(povprecno[c(1,5)] %>% right_join(napovej)), aes(leto)) +
-  geom_line(aes(y=zaposlenost)) +
-  geom_point(aes(y=napoved)) + ggtitle("Zaposlenost mladih v Evropi")
+                      zaposlenost = predict(lin, data.frame(leto=c(2017, 2018))), napoved= TRUE)
+zape <- povprecno[c(1,5)]
+zape$napoved <- FALSE
+zape <- zape %>% rbind(napovej)
+zaposlenost_evropa <- ggplot(zape) + aes(x=leto, y=zaposlenost, color=napoved) +
+  geom_line() + geom_point() + ggtitle("Zaposlenost mladih v Evropi")
 
 
 
@@ -149,7 +152,7 @@ sloizb <- izobrazba %>%
   filter(drzava == 'Slovenia')
 lin <- lm(data = sloizb, izobrazba ~ leto + I(leto^2) + I(leto^3))
 napovej <- data.frame(leto = c(2017, 2018, 2019), drzava = 'Slovenia',
-                        sprem = predict(lin, data.frame(leto=c(2017, 2018, 2019))), napoved=FALSE)
+                        izobrazba = predict(lin, data.frame(leto=c(2017, 2018, 2019))), napoved=FALSE)
 sloizb$napoved <- TRUE
 sloizb <- sloizb %>% left_join(napovej) %>% rbind(sloizb %>% right_join(napovej))
 sliz <- ggplot(sloizb) + aes(x=leto, y=izobrazba, color=napoved) +
@@ -160,24 +163,24 @@ sliz <- ggplot(sloizb) + aes(x=leto, y=izobrazba, color=napoved) +
     xlab('leto') + ylab(izobrazba)
 
 eizb <- izobrazba %>% filter(leto==2008)
-eizb1 <- hist(eizb$izobrazba, breaks = 20, col = "gray",
-     main = 'Porazdelitev deleža izobrazbe v Evropi za 2008',
-     xlab = 'Število', ylab = 'Pogostost'
-)
+eizb1 <- ggplot(eizb) + geom_histogram(binwidth = 4, color='grey', fill='olivedrab3') + aes(x=izobrazba) +
+              ggtitle('Porazdelitev deleža izobrazbe v Evropi za 2008') +
+              xlab('Delež') + ylab('Ferkvenca')
+
 eizb <- izobrazba %>% filter(leto==2016)
-eizb2 <- hist(eizb$izobrazba, breaks = 20, col = "gray",
-              main = 'Porazdelitev deleža izobrazbe v Evropi za 2016',
-              xlab = 'Število', ylab = 'Pogostost'
-)
+eizb2 <- ggplot(eizb) + geom_histogram(binwidth = 4, color='grey', fill='orchid2') + aes(x=izobrazba) +
+  ggtitle('Porazdelitev deleža izobrazbe v Evropi za 2016') +
+  xlab('Delež') + ylab('Ferkvenca')
+
 
 zim <- velika_tabela[c('leto', 'drzava', 'zaposlenost', 'mladi')]
-zim$skupine <- hclust(dist(scale(drzave$BDPpc))) %>% cutree(3)
-zim.graf <- ggplot(tabela %>% filter(leto==2016)) +
-            aes(x=zaposlenost, y=mladi, color=as.character(skupine)) + geom_point(show.legend=F) +
-            ggtitle('Primerjava zaposlenosti mladih v primerjavi zdeležem mladih v državi za leto 2016')
+zim$skupine <- hclust(dist(scale(velika_tabela$BDPpc))) %>% cutree(5)
+zim.graf <- ggplot(zim %>% filter(leto==2016)) +
+            aes(x=zaposlenost, y=mladi, color=as.character(skupine)) + geom_point(size=2, show.legend=F) +
+            ggtitle('Primerjava zaposlenosti mladih v primerjavi zdeležem mladih v državi za leto 2016 z razdelitvijo glede na BDP per capita v 5 skupin')
 
 bii <- velika_tabela[c('leto', 'drzava', 'BDPpc', 'izobrazba')]
 bii.graf <- ggplot(bii %>% filter(leto==2016)) +
-          aes(x=BDPpc, y=izobrazba) + geom_point() +
+          aes(x=BDPpc, y=izobrazba) + geom_point(size=2) +
           geom_smooth(method = 'lm', formula = y ~ x + I(x^2) + I(x^3)) +
           ggtitle('Primerjava podatkov BDP per capita in izobrazbe za leto 2016')

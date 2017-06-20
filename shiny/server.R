@@ -67,13 +67,13 @@ shinyServer(function(input, output) {
     n <- sum(tabela$leto == input$letnica)
     if (input$skup>=n){
       print(ggplot(tabela %>% filter(leto==as.integer(input$letnica))) +
-              aes(x=prva, y=druga, color=drzava) + geom_point() +
+              aes(x=prva, y=druga, color=drzava) + geom_point(size=2) +
               ggtitle(paste('Primerjava podatkov', input$spremenljivka1, 'in', input$spremenljivka2, 'za leto', as.character(input$letnica), sep = ' ')) +
               xlab(input$spremenljivka1) + ylab(input$spremenljivka2))
     } else {
     tabela$skupine <- hclust(dist(scale(velika_tabela$BDPpc))) %>% cutree(input$skup)
     print(ggplot(tabela %>% filter(leto==as.integer(input$letnica))) +
-      aes(x=prva, y=druga, color=as.character(skupine)) + geom_point(show.legend=F) +
+      aes(x=prva, y=druga, color=as.character(skupine)) + geom_point(size=3, show.legend=F) +
         ggtitle(paste('Primerjava podatkov', input$spremenljivka1, 'in', input$spremenljivka2, 'za leto', as.character(input$letnica), sep = ' ')) +
         xlab(input$spremenljivka1) + ylab(input$spremenljivka2))}
     } else {
