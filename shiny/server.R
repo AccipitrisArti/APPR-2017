@@ -1,6 +1,8 @@
 library(shiny)
 require(stats)
 library(mgcv)
+#source("../vizualizacija/vizualizacija.r", encoding = "UTF-8")
+
 
 shinyServer(function(input, output) {
   output$tabele <- DT::renderDataTable({
@@ -92,4 +94,26 @@ shinyServer(function(input, output) {
                           xlab = 'Število', ylab = 'Pogostost'
                           )
     })
+  
+  output$zemljevidi <- renderPlot({
+    drzAve <- velika_tabela[c('leto','drzava', input$sp)] %>% filter(leto==input$le) %>% mutate(drzava = parse_factor(drzava, levels(zemljevid$drzava)))
+    colnames(drzAve) <- c('leto','drzava', 'spre')
+    if (input$skupin == 'Negrupirano'){
+      zemlj <- ggplot() + geom_polygon(data = zemljevid %>% left_join(drzAve),
+                                       aes(x = long, y = lat, group = group, fill=spre)) +
+        ggtitle(paste('Države obarvane glede na',
+                      input$sp, sep=' ')) + xlab("long") + ylab("lat") +
+        coord_quickmap(xlim = c(-25, 40), ylim = c(32, 72))
+    } else {
+      drzAve.norm <- drzAve %>% select(-drzava, -leto) %>% scale()
+      rownames(drzAve.norm) <- drzAve$drzava
+      k <- kmeans(drzAve.norm, as.integer(input$skupin), nstart = 1000)  
+      skupine <- data.frame(drzava = drzAve$drzava, skupina = factor(k$cluster))
+      zemlj <- ggplot() + geom_polygon(data = zemljevid %>% left_join(skupine, by = c("drzava" = "drzava")),
+                                      aes(x = long, y = lat, group = group, fill = skupina), show.legend=T) +
+        ggtitle(paste('Države razdeljene v',as.character(input$skupin),  'skupin glede na podatek', input$sp, sep=' ')) + xlab("long") + ylab("lat") +
+        coord_quickmap(xlim = c(-25, 40), ylim = c(32, 72))
+    }
+    print(zemlj)
+  })
 })

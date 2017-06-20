@@ -63,6 +63,17 @@ shinyUI(fluidPage(
                  sliderInput('koraki', label='Izberi število korakov',
                              min=1, max=30, step=1, value = 10)
                ),
-               mainPanel(plotOutput("porazdelitev")))
+               mainPanel(plotOutput("porazdelitev"))),
+      
+      tabPanel("Zemljevidi",
+               sidebarPanel(
+                 selectInput("sp", label="Izberi spremenljivko",
+                             choices=colnames(velika_tabela[c(-1,-2)]), selected='BDPpc'),
+                 sliderInput('le', label='Izberi leto',
+                             min=2008, max=2016, step=1, value = 2016),
+                 selectInput('skupin', label='Izberi število skupin',
+                             choices=c('Negrupirano',2,3,4,5,6,7,8,9), selected='Negrupirano')
+               ),
+               mainPanel(plotOutput("zemljevidi")))
     )
 ))
