@@ -59,9 +59,13 @@ Razlaga pomena stolpcev:
 source("vizualizacija/vizualizacija.r", encoding = "UTF-8")
 ```
 
+Zaradi velike količine različnih podatkov se bom v projektu osredotočil predvsem na zaposlenost in izobrazbo mladih.
+
 ***
 
 ## Zaposlenost
+
+Najprej se bom osredotočil na podatke o zaposlenosti mladih po Evropi. Oglejmo si prva dva grafa:
 
 ```{r graf_zaposlenost, echo=FALSE, fig.align='center', warning=FALSE, message=FALSE}
 grid.arrange(zaposlenost_drzave, zaposlenost_evropa,  ncol=1)
@@ -71,56 +75,61 @@ Iz grafa vidimo, da je v večini izbranih držav mogoče opaziti podobnost nihan
 
 Modri del spodnjega grafa nam prikazuje napoved za leti 2017 in 2018 po linearni regresiji s kvadratno funkcijo. A ta napoved je slaba že zaradi neoptimalne izbire modela in majhne količine podatkov.
 
+```{r zemljevid2, echo=FALSE, fig.align='center', fig.cap='zemljevid Evrope glede na zaposlenost mladih', warning=FALSE, message=FALSE}
+zemljevid2
+```
+
+Zgornji zemljevid nam prikazuje delež zaposlenih mladih v državah po Evropi. Precej očitno se mi zdi, da delež zaposlenosti pada od Severa proti Jugu Evrope. Vidimo, da so mladi v Srednji in Severni Evropi najbolj zaposleni, mladi v Južni Evropi pa najmanj.
+
+Spodnji graf prikazuje razmerje med zaposlenostjo in deležem mladih v državi. Zaradi zelo velike razpršenosti težko kaj dosti povemo o tej povezavi. Zdi se, da z deležem mladih tudi njihova zaposlenost raste, a tega iz podatkov ne moremo trditi. Bi pa si to morebitno povezavo lahko razlagali kot to, da imajo države z majhnim deležem mladih večji delež zrelega prebivalstva, torej ljudi, ki imajo v večji meri že redno zaposlitev, kar pa avtomatsko pomeni manj prostih delovnih mest za mlade, torej prebivalce, ki imajo manj delovnih izkušenj in še niso imeli redne zaposlitve.
+Barve pik pa nam povejo kakšen BDP ima država na prebivalca. Vidimo, da imajo države z višjim BDP per capita praviloma tudi nekoliko večji delež mladih in večjo zaposlenost mladih. To si razlagam s tem, da se veliko za delo sposobnih mladih preseljuje v bogatejše države. S tem se povečuje razlika med deležem mladih v bogatejših in revnejših državah, ker pa so pripravljeni delati, saj so se med drugim prav zaradi tega preselili, se veča tudi razlika v zaposlenosti.
+
+Spodnji graf pa nam prikazuje
+
 ```{r graf_mladi_in_zaposlenost, echo=FALSE, fig.align='center', fig.cap='Primerjava števila mladih in njihove zaposlenosti', echo=FALSE, message=FALSE, warning=FALSE, warning=FALSE}
 # graf zaposlenosti in mladih v 3 skupinah po BDPpc za 2016
 zim.graf
 ```
 
-Primerjava
 
-
-```{r zemljevid2, echo=FALSE, fig.align='center', fig.cap='zemljevid Evrope glede na zaposlenost mladih', warning=FALSE, message=FALSE}
-zemljevid2
-```
-
-Zaposlenost
+Nekaj o zaposlenosti ...
 
 ## Izobrazba
+
+Nadaljujmo z izobrazbo mladih.
+
+Graf \ref{fig:graf_izobrazba_slovenia} prikazuje 
+V nadaljevanju pa vidimo ...
 
 ```{r graf_izobrazba_slovenia, echo=FALSE, fig.align='center', fig.cap='Izobrazba v Sloveniji', warning=FALSE, message=FALSE}
 sliz
 ```
-
-
-Slovenija
 
 ```{r izobrazba_v_evropi, echo=FALSE, fig.align='center', fig.cap='Porazdelitev deleža izobrazbe v Evropi', echo=FALSE, message=FALSE, warning=FALSE, warning=FALSE}
 # porazdelitev izobrazbe v Evropi 2016 in 2008
 grid.arrange(eizb1, eizb2, ncol=2)
 ```
 
-Evropa
-
+V nadaljevanju pa vidimo, kako so v skupine glede na BDP per capita razdeljene države v Evropi (zemljevid in tabela).
 
 ```{r zemljevid1, echo=FALSE, fig.align='center', fig.cap='zemljevid Evrope razdeljene glede na BDP na prebivalca', warning=FALSE, message=FALSE}
 zemljevid1
 grid.arrange(tableGrob(Skupine[1:14,]), tableGrob(Skupine[15:28,]), ncol=2)
 ```
 
-Graf \ref{fig:zemljevid1} prikazuje skupine držav glede na BDP per capita.
+Spodnji graf ...
 
 ```{r graf_BDPpc_in_izobrazba, echo=FALSE, fig.align='center', fig.cap='Povezava med izobrazbo in BDP per capita', warning=FALSE}
 # graf BDPpc in izobrazbe z metodo lm za 2016
 bii.graf
 ```
 
-Povezava
-
+Nekaj o izobrazbi ...
 
 ***
 # Različni prikazi podatkov
 
-Predstavitev shinya
+Predstavitev shinya ...
 
 ```{r shiny, echo = FALSE, warning=FALSE}
 shinyAppDir("shiny", options=list(width="100%", height=600))

@@ -172,14 +172,12 @@ eizb2 <- ggplot(eizb) + geom_histogram(binwidth = 4, color='grey', fill='orchid2
   xlab('Delež') + ylab('Ferkvenca')
 
 
-zim <- velika_tabela[c('leto', 'drzava', 'zaposlenost', 'mladi')]
-zim$skupine <- hclust(dist(scale(velika_tabela$BDPpc))) %>% cutree(5)
+zim <- velika_tabela[c('leto', 'drzava', 'zaposlenost', 'mladi', 'BDPpc')]
 zim.graf <- ggplot(zim %>% filter(leto==2016)) +
-            aes(x=zaposlenost, y=mladi, color=as.character(skupine)) + geom_point(size=2, show.legend=F) +
-            ggtitle('Primerjava zaposlenosti mladih v primerjavi zdeležem mladih v državi za leto 2016 z razdelitvijo glede na BDP per capita v 5 skupin')
+            aes(x=zaposlenost, y=mladi, color=BDPpc) + geom_point(size=3) +
+            ggtitle('Zaposlenosti mladih in delež mladih v državi za leto 2016\n glede na BDP per capita v 5 skupin')
 
 bii <- velika_tabela[c('leto', 'drzava', 'BDPpc', 'izobrazba')]
-bii <- bii %>% left_join(Skupine, by = c("drzava" = "drzava"))
 bii.graf <- ggplot(bii %>% filter(leto==2016)) +
           aes(x=BDPpc, y=izobrazba) + geom_point(size=2) +
           geom_smooth(method = 'lm', formula = y ~ x + I(x^2) + I(x^3)) +
