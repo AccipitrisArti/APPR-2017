@@ -59,6 +59,9 @@ Razlaga pomena stolpcev:
 source("vizualizacija/vizualizacija.r", encoding = "UTF-8")
 ```
 
+***
+
+## Zaposlenost
 
 ```{r graf_zaposlenost, echo=FALSE, fig.align='center', warning=FALSE, message=FALSE}
 grid.arrange(zaposlenost_drzave, zaposlenost_evropa,  ncol=1)
@@ -68,9 +71,26 @@ Iz grafa vidimo, da je v večini izbranih držav mogoče opaziti podobnost nihan
 
 Modri del spodnjega grafa nam prikazuje napoved za leti 2017 in 2018 po linearni regresiji s kvadratno funkcijo. A ta napoved je slaba že zaradi neoptimalne izbire modela in majhne količine podatkov.
 
+```{r graf_mladi_in_zaposlenost, echo=FALSE, fig.align='center', fig.cap='Primerjava števila mladih in njihove zaposlenosti', echo=FALSE, message=FALSE, warning=FALSE, warning=FALSE}
+# graf zaposlenosti in mladih v 3 skupinah po BDPpc za 2016
+zim.graf
+```
+
+Primerjava
+
+
+```{r zemljevid2, echo=FALSE, fig.align='center', fig.cap='zemljevid Evrope glede na zaposlenost mladih', warning=FALSE, message=FALSE}
+zemljevid2
+```
+
+Zaposlenost
+
+## Izobrazba
+
 ```{r graf_izobrazba_slovenia, echo=FALSE, fig.align='center', fig.cap='Izobrazba v Sloveniji', warning=FALSE, message=FALSE}
 sliz
 ```
+
 
 Slovenija
 
@@ -81,16 +101,10 @@ grid.arrange(eizb1, eizb2, ncol=2)
 
 Evropa
 
-```{r graf_mladi_in_zaposlenost, echo=FALSE, fig.align='center', fig.cap='Primerjava števila mladih in njihove zaposlenosti', echo=FALSE, message=FALSE, warning=FALSE, warning=FALSE}
-# graf zaposlenosti in mladih v 3 skupinah po BDPpc za 2016
-zim.graf
-```
-
-Primerjava
-
 
 ```{r zemljevid1, echo=FALSE, fig.align='center', fig.cap='zemljevid Evrope razdeljene glede na BDP na prebivalca', warning=FALSE, message=FALSE}
 zemljevid1
+grid.arrange(tableGrob(Skupine[1:14,]), tableGrob(Skupine[15:28,]), ncol=2)
 ```
 
 Graf \ref{fig:zemljevid1} prikazuje skupine držav glede na BDP per capita.
@@ -102,11 +116,6 @@ bii.graf
 
 Povezava
 
-```{r zemljevid2, echo=FALSE, fig.align='center', fig.cap='zemljevid Evrope glede na zaposlenost mladih', warning=FALSE, message=FALSE}
-zemljevid2
-```
-
-Zaposlenost
 
 ***
 # Različni prikazi podatkov

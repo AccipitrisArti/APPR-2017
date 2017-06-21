@@ -22,7 +22,7 @@ shinyUI(fluidPage(
                  selectInput("sprem2", label="Izberi spremenljivko",
                              choices=colnames(velika_tabela[c(-1,-2)]), selected='BDPpc'),
                  checkboxGroupInput('drzav', label="Izberi države",
-                                    choices=ime$ime, selected=c('Hungary', 'Spain', 'Sweden', 'United Kingdom',
+                                    choices=as.character(imena$ime), selected=c('Hungary', 'Spain', 'Sweden', 'United Kingdom',
                                                                 'Italy', 'Slovenia', 'Poland', 'Austria', 'Croatia'
                                                                 ))
                ),

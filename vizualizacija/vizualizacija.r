@@ -23,21 +23,18 @@ zemljevid <- zemljevid %>% merge(imena)
 #zemljevid$imena <- factor(zemljevid$imena)
 colnames(zemljevid)[12] <- 'drzava'
 
-zemljevid.evrope <- function(n, tabela){
-  drzAve <- tabela %>% filter(leto==2016) %>% mutate(drzava = parse_factor(drzava, levels(zemljevid$drzava)))
-  drzAve.norm <- drzAve %>% select(-drzava, -leto) %>% scale()
-  rownames(drzAve.norm) <- drzAve$drzava
-  k <- kmeans(drzAve.norm, n, nstart = 1000)  
-  #k$tot.withinss
-  skupine <- data.frame(drzava = drzAve$drzava, skupina = factor(k$cluster))
-  #table(k$cluster)
-  evropa <- ggplot() + geom_polygon(data = zemljevid %>% left_join(skupine, by = c("drzava" = "drzava")),
-                                aes(x = long, y = lat, group = group, fill = skupina), show.legend=T) +
-          ggtitle(paste('Države razdeljene v',as.character(n),  'skupin glede na podatek', colnames(tabela)[3], sep=' ')) + xlab("long") + ylab("lat") +
-      coord_quickmap(xlim = c(-25, 40), ylim = c(32, 72))
-  return(evropa)
-}
-zemljevid1 <- zemljevid.evrope(5, drzave)
+DrzAve <- drzave %>% filter(leto==2016) %>% mutate(drzava = parse_factor(drzava, levels(zemljevid$drzava)))
+DrzAve.norm <- DrzAve %>% select(-drzava, -leto) %>% scale()
+rownames(DrzAve.norm) <- DrzAve$drzava
+k <- kmeans(DrzAve.norm, 5, nstart = 1000)  
+#k$tot.withinss
+Skupine <- data.frame(drzava = DrzAve$drzava, skupina = factor(k$cluster))
+rownames(Skupine)<- NULL
+#table(k$cluster)
+zemljevid1 <- ggplot() + geom_polygon(data = zemljevid %>% left_join(Skupine, by = c("drzava" = "drzava")),
+                              aes(x = long, y = lat, group = group, fill = skupina), show.legend=T) +
+        ggtitle('Države razdeljene v 5 skupin glede na BDP per capita.') + xlab("long") + ylab("lat") +
+    coord_quickmap(xlim = c(-25, 40), ylim = c(32, 72))
 
 zemljevid2 <- ggplot() + geom_polygon(data = zemljevid %>% left_join(velika_tabela %>% filter(leto==2015)),
                              aes(x = long, y = lat, group = group, fill=zaposlenost)) +
@@ -182,6 +179,7 @@ zim.graf <- ggplot(zim %>% filter(leto==2016)) +
             ggtitle('Primerjava zaposlenosti mladih v primerjavi zdeležem mladih v državi za leto 2016 z razdelitvijo glede na BDP per capita v 5 skupin')
 
 bii <- velika_tabela[c('leto', 'drzava', 'BDPpc', 'izobrazba')]
+bii <- bii %>% left_join(Skupine, by = c("drzava" = "drzava"))
 bii.graf <- ggplot(bii %>% filter(leto==2016)) +
           aes(x=BDPpc, y=izobrazba) + geom_point(size=2) +
           geom_smooth(method = 'lm', formula = y ~ x + I(x^2) + I(x^3)) +
