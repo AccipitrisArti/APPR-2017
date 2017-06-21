@@ -84,22 +84,21 @@ Zgornji zemljevid nam prikazuje delež zaposlenih mladih v državah po Evropi. P
 Spodnji graf prikazuje razmerje med zaposlenostjo in deležem mladih v državi. Zaradi zelo velike razpršenosti težko kaj dosti povemo o tej povezavi. Zdi se, da z deležem mladih tudi njihova zaposlenost raste, a tega iz podatkov ne moremo trditi. Bi pa si to morebitno povezavo lahko razlagali kot to, da imajo države z majhnim deležem mladih večji delež zrelega prebivalstva, torej ljudi, ki imajo v večji meri že redno zaposlitev, kar pa avtomatsko pomeni manj prostih delovnih mest za mlade, torej prebivalce, ki imajo manj delovnih izkušenj in še niso imeli redne zaposlitve.
 Barve pik pa nam povejo kakšen BDP ima država na prebivalca. Vidimo, da imajo države z višjim BDP per capita praviloma tudi nekoliko večji delež mladih in večjo zaposlenost mladih. To si razlagam s tem, da se veliko za delo sposobnih mladih preseljuje v bogatejše države. S tem se povečuje razlika med deležem mladih v bogatejših in revnejših državah, ker pa so pripravljeni delati, saj so se med drugim prav zaradi tega preselili, se veča tudi razlika v zaposlenosti.
 
-Spodnji graf pa nam prikazuje
-
 ```{r graf_mladi_in_zaposlenost, echo=FALSE, fig.align='center', fig.cap='Primerjava števila mladih in njihove zaposlenosti', echo=FALSE, message=FALSE, warning=FALSE, warning=FALSE}
 # graf zaposlenosti in mladih v 3 skupinah po BDPpc za 2016
 zim.graf
 ```
 
-
-Nekaj o zaposlenosti ...
-
+***
 ## Izobrazba
 
-Nadaljujmo z izobrazbo mladih.
+Nadaljujmo z izobrazbo mladih. Torej gledamo delež prebivalcev starih med 15 in 29 let, ki imajo vsaj osnovnošolsko izobrazbo.
 
-Graf \ref{fig:graf_izobrazba_slovenia} prikazuje 
-V nadaljevanju pa vidimo ...
+Prvi graf \ref{fig:graf_izobrazba_slovenia} prikazuje delež mladih v Sloveniji z vsaj osnovnošolsko izobrazbo od leta 2004 do 2016. Vidimo nekakšen padec v letu 2005 in potem počasno rast, a zaradi premajhnega poznavanja slovenske zakonodaje ne vem, kje bi lahko bil razlog za to. Morda je bil z vstopom v EU sprejet kakšen nov zakon, ki je urejal šolski sistem ali pa je to posledica uveljavljanja devetletke v osnovni šoli.
+
+V nadaljevanju pa vidimo, kako je delež izobraženih mladih leta 2008 in 2015 porazdeljen po Evropi. Vidimo, da se je gostota porazdelitve pri višjem deležu izobrazbe nekoliko povečala na račun nižjega deleža.
+
+A, če bolje pogledamo podatke, nam morajo v oči skočiti države s pretirano nizkim deležem izobrazbe. Pa tudi sicer se mi ne zdi, da (vsaj v Sloveniji) do 15 leta starosti dokonča osnovno šolo manj kot 85% mladih. Podatki se mi ne zdijo povsem realni, zato iz njih težko naredim kakšen dober zaključek.
 
 ```{r graf_izobrazba_slovenia, echo=FALSE, fig.align='center', fig.cap='Izobrazba v Sloveniji', warning=FALSE, message=FALSE}
 sliz
@@ -110,26 +109,32 @@ sliz
 grid.arrange(eizb1, eizb2, ncol=2)
 ```
 
-V nadaljevanju pa vidimo, kako so v skupine glede na BDP per capita razdeljene države v Evropi (zemljevid in tabela).
+Spodaj vidimo, kako so v 5 skupin razdeljene države v Evropi glede na BDP per capita (zemljevid in tabela). Do neke mere lahko opazimo podobnost z zemljevidom zaposlenosti.
 
 ```{r zemljevid1, echo=FALSE, fig.align='center', fig.cap='zemljevid Evrope razdeljene glede na BDP na prebivalca', warning=FALSE, message=FALSE}
 zemljevid1
 grid.arrange(tableGrob(Skupine[1:14,]), tableGrob(Skupine[15:28,]), ncol=2)
 ```
 
-Spodnji graf ...
+Spodnji graf prikazuje, kako je delež izobrazbe povezan z BDP per capita.
+Vidimo, da je delež izobrazbe precej neodvisen od BDP na prebivalca. Iz tega lahko zaključimo le to, da je osnovna šola v Evropi povsod približno enako dostopna, saj je za razliko od mnogih držav z drugih celin omogočena vsem.
 
 ```{r graf_BDPpc_in_izobrazba, echo=FALSE, fig.align='center', fig.cap='Povezava med izobrazbo in BDP per capita', warning=FALSE}
 # graf BDPpc in izobrazbe z metodo lm za 2016
 bii.graf
 ```
 
-Nekaj o izobrazbi ...
-
 ***
 # Različni prikazi podatkov
 
-Predstavitev shinya ...
+Spodaj je aplikacija Shiny, s pomočjo katere lahko opazujemo vse podatke pod različnimi zornimi koti. Imamo 6 zavihkov:
+
+* Tabela: Za izbrano spremenljivko si lahko v tabeli ogledamo številske podatke za vse države iz tabele, za vsa možna leta.
+* Graf: Za izbrano spremenljivko lahko izberemo, za katere države nam izriše graf te spremenljivke skozi čas. Izberemo lahko več držav.
+* Napoved: Za posamezno državo in posamezno spremenljivko, lahko z izbrano regresivno funkcijo napovemo gibanje za naslednja 3 leta (za napoved je potrebno označiti 'Napoved').
+* Primerjave spremenljivk: Za x in y oz izberemo spremenljivki. Za izbrano leto nam graf prikazuje povezavo med njima. Če imamo izbrano regresivno funkcijo (z linearno regresijo), nam nariše graf regresivne funkcije, sicer pa nam pike obarva (glede na izbrano število skupin) glede na BDP per capita.
+* Porazdelitev: Za izbrano spremenljivko in leto nam nariše histogram z izbranim številom korakov.
+* Zemljevidi: Za izbrano spremenljivko in leto lahko narišemo zemljevid Evrope. Države lahko glede na spremenljivko tudi diskretno razdelimo v izbrano število skupin.
 
 ```{r shiny, echo = FALSE, warning=FALSE}
 shinyAppDir("shiny", options=list(width="100%", height=600))
@@ -137,6 +142,6 @@ shinyAppDir("shiny", options=list(width="100%", height=600))
 
 # Zaključek
 
-zzzzzzzzzzzzz
+Kot smo lahko opazili, so podatki zelo različno primerni za analizo. Izobrazba je že sama po sebi zelo odvisna od šolskega sistema v državi, zaposlenost pa se mi je za analizo zdela dosti primernejša. Pri projektu sem se seveda v prvi vrsti naučil veliko v povezavi s programom R, predvsem Shiny me je v samo delo najbolj potegnil. Naučil pa sem se tudi nekaj o iz podatkov vidnem stanju v Evropi glede mladih. Menim, da je stanje v mladinskem sektorju v Sloveniji zelo slabo, saj se država z nami premalo ukvarja in je še preveč stvari, ki so povezane z mladimi, premočno odvisnih od politike, ki pa ne dela nujno v prid vsem državljanom.
 
-
+***

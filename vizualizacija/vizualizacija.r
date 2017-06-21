@@ -161,14 +161,14 @@ sliz <- ggplot(sloizb) + aes(x=leto, y=izobrazba, color=napoved) +
     ggtitle('Izobrazba v Sloveniji skozi leta v in napoved za naslednja 3 leta') +
     xlab('leto') + ylab(izobrazba)
 
-eizb <- izobrazba %>% filter(leto==2008)
-eizb1 <- ggplot(eizb) + geom_histogram(binwidth = 4, color='grey', fill='olivedrab3') + aes(x=izobrazba) +
+eizb11 <- izobrazba %>% filter(leto==2008)
+eizb1 <- ggplot(eizb11) + geom_histogram(binwidth = 4, color='grey', fill='olivedrab3') + aes(x=izobrazba) +
               ggtitle('Delež izobrazbe v 2008') +
               xlab('Delež') + ylab('Ferkvenca')
 
-eizb <- izobrazba %>% filter(leto==2016)
-eizb2 <- ggplot(eizb) + geom_histogram(binwidth = 4, color='grey', fill='orchid2') + aes(x=izobrazba) +
-  ggtitle('Delež izobrazbe v 2016') +
+eizb22 <- izobrazba %>% filter(leto==2015)
+eizb2 <- ggplot(eizb22) + geom_histogram(binwidth = 4, color='grey', fill='orchid2') + aes(x=izobrazba) +
+  ggtitle('Delež izobrazbe v 2015') +
   xlab('Delež') + ylab('Ferkvenca')
 
 

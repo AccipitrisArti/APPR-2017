@@ -79,7 +79,7 @@ shinyServer(function(input, output) {
     } else {
       print(ggplot(tabela %>% filter(leto==as.integer(input$letnica))) +
               aes(x=prva, y=druga) + geom_point() +
-              geom_smooth(method = input$priblizek2, formula = y ~ x + I(x^2) + I(x^3)) +
+              geom_smooth(method = 'lm', formula = as.formula(input$priblizek2)) +
               ggtitle(paste('Primerjava podatkov', input$spremenljivka1, 'in', input$spremenljivka2, 'za leto', as.character(input$letnica), sep = ' ')) +
               xlab(input$spremenljivka1) + ylab(input$spremenljivka2))
     }
@@ -91,7 +91,7 @@ shinyServer(function(input, output) {
     tabela <- tabela %>% filter(leto==as.integer(input$letnik))
     hist(tabela$porazdelji, breaks = input$koraki, col = "gray",
                           main = paste('Porazdelitev', input$porazd, sep = ' '),
-                          xlab = 'Število', ylab = 'Pogostost'
+                          xlab = 'Število', ylab = 'Ferkvenca'
                           )
     })
   
@@ -103,7 +103,7 @@ shinyServer(function(input, output) {
                                        aes(x = long, y = lat, group = group, fill=spre)) +
         ggtitle(paste('Države obarvane glede na',
                       input$sp, sep=' ')) + xlab("long") + ylab("lat") +
-        coord_quickmap(xlim = c(-25, 40), ylim = c(32, 72))
+        coord_quickmap(xlim = c(-25, 40), ylim = c(32, 72)) + guides(fill=guide_legend(title=input$sp))
     } else {
       drzAve.norm <- drzAve %>% select(-drzava, -leto) %>% scale()
       rownames(drzAve.norm) <- drzAve$drzava
