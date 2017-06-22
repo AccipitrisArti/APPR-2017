@@ -63,7 +63,7 @@ shinyServer(function(input, output) {
   output$primerjava <- renderPlot({
     tabela <- velika_tabela[c('leto', 'drzava', input$spremenljivka1[1], input$spremenljivka2[1])]
     colnames(tabela) <- c('leto', 'drzava', 'prva', 'druga')
-    if (input$priblizek2 == 'Izberi metodo'){
+    if (input$priblizek2 == 'Izberi funkcijo'){
     n <- sum(tabela$leto == input$letnica)
     if (input$skup>=n){
       print(ggplot(tabela %>% filter(leto==as.integer(input$letnica))) +
@@ -91,7 +91,7 @@ shinyServer(function(input, output) {
     tabela <- tabela %>% filter(leto==as.integer(input$letnik))
     hist(tabela$porazdelji, breaks = input$koraki, col = "gray",
                           main = paste('Porazdelitev', input$porazd, sep = ' '),
-                          xlab = 'Število', ylab = 'Ferkvenca'
+                          xlab = 'Število', ylab = 'Frekvenca'
                           )
     })
   

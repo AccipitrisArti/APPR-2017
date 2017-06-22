@@ -164,12 +164,12 @@ sliz <- ggplot(sloizb) + aes(x=leto, y=izobrazba, color=napoved) +
 eizb11 <- izobrazba %>% filter(leto==2008)
 eizb1 <- ggplot(eizb11) + geom_histogram(binwidth = 4, color='grey', fill='olivedrab3') + aes(x=izobrazba) +
               ggtitle('Delež izobrazbe v 2008') +
-              xlab('Delež') + ylab('Ferkvenca')
+              xlab('Delež') + ylab('Frekvenca')
 
 eizb22 <- izobrazba %>% filter(leto==2015)
 eizb2 <- ggplot(eizb22) + geom_histogram(binwidth = 4, color='grey', fill='orchid2') + aes(x=izobrazba) +
   ggtitle('Delež izobrazbe v 2015') +
-  xlab('Delež') + ylab('Ferkvenca')
+  xlab('Delež') + ylab('Frekvenca')
 
 
 zim <- velika_tabela[c('leto', 'drzava', 'zaposlenost', 'mladi', 'BDPpc')]

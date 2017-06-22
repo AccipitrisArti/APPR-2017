@@ -113,6 +113,7 @@ Spodaj vidimo, kako so v 5 skupin razdeljene države v Evropi glede na BDP per c
 
 ```{r zemljevid1, echo=FALSE, fig.align='center', fig.cap='zemljevid Evrope razdeljene glede na BDP na prebivalca', warning=FALSE, message=FALSE}
 zemljevid1
+Skupine <- Skupine[order(Skupine$skupina),]
 grid.arrange(tableGrob(Skupine[1:14,]), tableGrob(Skupine[15:28,]), ncol=2)
 ```
 
@@ -137,7 +138,7 @@ Spodaj je aplikacija Shiny, s pomočjo katere lahko opazujemo vse podatke pod ra
 * Zemljevidi: Za izbrano spremenljivko in leto lahko narišemo zemljevid Evrope. Države lahko glede na spremenljivko tudi diskretno razdelimo v izbrano število skupin.
 
 ```{r shiny, echo = FALSE, warning=FALSE}
-shinyAppDir("shiny", options=list(width="100%", height=600))
+shinyAppDir("shiny", options=list(width="100%", height=800))
 ```
 
 # Zaključek
